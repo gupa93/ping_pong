@@ -61,8 +61,16 @@
         y: 0,
         w: line.w,
         h: 200,
+        speed: 5,
         _move: function () {
-          this.y = ball.y
+          if (this.y + this.h/2 < ball.y + ball.r){ // configurando a velocidade do jogador CPU
+            this.y += this.speed // 
+          } else{
+            this.y -= this.speed
+          }
+        },
+        speedUP: function(){ // aumentando a velocidade da raquete do CPU
+          this.speed += 2
         },
         draw: function () {
           canvasCtx.fillStyle = "#ffffff"
@@ -149,9 +157,15 @@
           // -1 * -1 = 1
           this.directionY *= -1
         },
+        _speedUp: function(){ // aumentar a velocidade da bolinha a medida que haverão rebatidas
+          this.speed +=2
+        },
         _pointUp: function () {
+          this._speedUp()
+          rightPaddle.speedUP() // a cada gol que o CPU levar, a velocidade da raqueta irá aumentar, deixando o jogo mais competitivo
+
           this.x = field.w / 2
-          this.y = field.h / 2
+          this.y = field.h / 2       
         },
         _move: function () {
           this.x += this.directionX * this.speed
